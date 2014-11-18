@@ -6,12 +6,12 @@ Clase (y programa principal) para un servidor de eco en UDP simple
 
 import SocketServer
 import sys
-
+import os
 class SIPHandler(SocketServer.DatagramRequestHandler):
     """
     SIP server class
     """
-    def procesar(self, line):
+    def procesar(self, line,HOST,AUDIO):
         linea = line.split(" ")
         metodo = linea[0]
         if metodo == "INVITE" :
@@ -19,7 +19,10 @@ class SIPHandler(SocketServer.DatagramRequestHandler):
             line += 'SIP/2.0 180 Ring' + '\r\n' + '\r\n'
             line+= 'SIP/2.0 200 OK' + '\r\n' + '\r\n'
             self.wfile.write(line)
-        if metodo != "INVITE" or "ACK" or "BYE":
+        elif metodo == "ACK" :
+            aEjecutar='mp32rtp -i 127.0.0.1 -p 23032 <  ' + AUDIO
+            os.system(aEjecutar)
+        elif metodo != "INVITE" or "ACK" or "BYE":
             line = "SIP/2.0 405 Method Not Allowed" + '\r\n' + '\r\n'
             self.wfile.write(line)
     def handle(self):
@@ -27,12 +30,11 @@ class SIPHandler(SocketServer.DatagramRequestHandler):
         while 1:
                 # Leyendo línea a línea lo que nos envía el cliente
                 line = self.rfile.read()
-                print line +"------------------------------"
                 if not line:
                     break
-                else:
-                    print "El cliente nos manda " + line
-                    self.procesar(line)
+                
+                print "El cliente nos manda " + line
+                self.procesar(line,HOST,AUDIO)
                 # Si no hay más líneas salimos del bucle infinito
                 
             
