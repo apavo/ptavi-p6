@@ -20,7 +20,7 @@ class SIPHandler(SocketServer.DatagramRequestHandler):
             line+= 'SIP/2.0 200 OK' + '\r\n' + '\r\n'
             self.wfile.write(line)
         elif metodo == "ACK" :
-            aEjecutar='mp32rtp -i 127.0.0.1 -p 23032 <  ' + AUDIO
+            aEjecutar='mp32rtp -i ' + HOST + ' -p 5060 <  ' + AUDIO
             os.system(aEjecutar)
         elif metodo != "INVITE" or "ACK" or "BYE":
             line = "SIP/2.0 405 Method Not Allowed" + '\r\n' + '\r\n'
