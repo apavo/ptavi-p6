@@ -30,12 +30,14 @@ try:
     
     print "Enviando: " + line
     my_socket.send(line + '\r\n')
+   
+   
     data = my_socket.recv(1024)
     print data
     contestacion=data.split(' ')
     procesar_contestacion(data)
     print "Terminando socket..."
-
+    
     # Cerramos todo
     my_socket.close()
     print "Fin."
