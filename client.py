@@ -43,6 +43,10 @@ try:
         my_socket.send(line)
         data = my_socket.recv(1024)
         print data
+    else:
+        my_socket.send(line)
+        data = my_socket.recv(1024)
+        print data
 
     print "Terminando socket..."
 
