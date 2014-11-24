@@ -32,16 +32,18 @@ try:
     my_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     my_socket.connect((SERVER, PORT))
     print "Enviando: " + line
-    my_socket.send(line + '\r\n')
-    data = my_socket.recv(1024)
-    print data
-    contestacion = data.split(' ')
-    procesar_contestacion(data)
-    data = my_socket.recv(1024)
-    line = 'BYE ' + 'sip:' + LOGIN + '@' + IP + ' SIP/2.0' + '\r\n' + '\r\n'
-    my_socket.send(line)
-    data = my_socket.recv(1024)
-    print data
+    if METODO == "INVITE":
+        my_socket.send(line + '\r\n')
+        data = my_socket.recv(1024)
+        print data
+        contestacion = data.split(' ')
+        procesar_contestacion(data)
+        data = my_socket.recv(1024)
+    elif METODO == "BYE":
+        my_socket.send(line)
+        data = my_socket.recv(1024)
+        print data
+
     print "Terminando socket..."
 
     # Cerramos todo
