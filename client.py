@@ -17,7 +17,6 @@ def procesar_contestacion(data):
         my_socket.send(line)
 try:
     # Dirección IP del servidor.
-    SERVER = 'localhost'
     METODO = sys.argv[1].upper()
     cliente = sys.argv[2].split("@")
     LOGIN = cliente[0]
@@ -30,7 +29,7 @@ try:
     # Creamos el socket, lo configuramos y lo atamos a un servidor/puerto
     my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     my_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    my_socket.connect((SERVER, PORT))
+    my_socket.connect((IP, PORT))
     print "Enviando: " + line
     if METODO == "INVITE":
         my_socket.send(line + '\r\n')
