@@ -19,8 +19,6 @@ class SIPHandler(SocketServer.DatagramRequestHandler):
         """
         # Guarda el metodo que nos envia el cliente
         linea = line.split(" ")
-        login = linea[1].split(":")
-        login = login[1].split("@")[0]
         metodo = linea[0]
         if metodo == "INVITE":
             line = 'SIP/2.0 100 Trying' + '\r\n' + '\r\n'
