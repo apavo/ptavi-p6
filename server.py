@@ -58,6 +58,9 @@ if __name__ == "__main__":
         HOST = sys.argv[1]
         PORT = int(sys.argv[2])
         AUDIO = sys.argv[3]
+        # Comprobar que existe el archivo mp3
+        if not os.access(SONG, os.F_OK):  # Devuelve True si está en la carpeta
+            sys.exit('Usage: python server.py IP port audio_file')
         serv = SocketServer.UDPServer((HOST, PORT), SIPHandler)
         print "Listening..."
         serv.serve_forever()
